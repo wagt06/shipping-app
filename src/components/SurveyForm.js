@@ -239,7 +239,7 @@ function SurveyForm({ survey, response, onSubmit }) {
   }
 
   return (
-    <Card title={survey.title}>
+    <Card title={survey.title} className="mt-2">
       <Text type="secondary" style={{ display: "block", marginBottom: 24 }}>
         {survey.description}
       </Text>

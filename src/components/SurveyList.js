@@ -57,11 +57,11 @@ function SurveyList({ surveys, userRole, onEdit, onAnswer, onViewResults, onDele
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-         <Button type="primary" 
+         {/* <Button type="primary" 
          //onClick={handleCreateSurvey} 
          icon={<FormOutlined />}>
                 Nueva Encuesta
-         </Button>
+         </Button> */}
       </div>
 
       {filteredSurveys.length === 0 ? (

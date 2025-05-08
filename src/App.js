@@ -5,9 +5,11 @@ import esES from "antd/lib/locale/es_ES"
 import HomePage from "./pages/HomePage"
 import LoginPage from "./pages/LoginPage"
 
+
 function App() {
   const [themeMode, setThemeMode] = useState("light") // light o dark
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [user, setUserRole] = useState([]) // admin o user
 
   // Configuración del tema dinámico
   const theme = {
@@ -15,11 +17,12 @@ function App() {
       colorPrimary: themeMode === "light" ? "#1677ff" : "#1d39c4",
       colorBgBase: themeMode === "light" ? "#ffffff" : "#141414",
       colorTextBase: themeMode === "light" ? "#000000" : "#ffffff",
-      borderRadius: 6,
+      borderRadius: 3,
     },
   }
 
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = (auth) => {
+    setUserRole(auth) 
     setIsAuthenticated(true)
   }
 
@@ -29,7 +32,7 @@ function App() {
         {!isAuthenticated ? (
           <Route path="/" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
         ) : (
-          <Route path="/" element={<HomePage setThemeMode={setThemeMode} themeMode={themeMode} />} />
+          <Route path="/" element={<HomePage setThemeMode={setThemeMode} themeMode={themeMode} user={user}  />} />
         )}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

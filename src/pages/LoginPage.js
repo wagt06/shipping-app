@@ -1,8 +1,10 @@
 import { useState } from "react"
-import { Button, Form, Input, Alert } from "antd"
+import { Button, Form, Input, Alert,Image } from "antd"
 import { loginService } from "../services/authService"
+import {useNavigate } from "react-router-dom"
 
 function LoginPage({ onLoginSuccess }) {
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
@@ -12,9 +14,10 @@ function LoginPage({ onLoginSuccess }) {
     const { username, password } = values
 
     try {
-      const isAuthenticated = await loginService(username, password)
-      if (isAuthenticated) {
-        onLoginSuccess()
+      const auth = await loginService(username, password)
+      if (auth) {
+        onLoginSuccess(auth)
+        navigate("/")
       } else {
         setError("Credenciales inválidas. Por favor, inténtalo de nuevo.")
       }
@@ -26,9 +29,24 @@ function LoginPage({ onLoginSuccess }) {
   }
 
   return (
-    <div className="login-container" style={{ maxWidth: 300, margin: "50px auto" }}>
-      <h2>Iniciar Sesión</h2>
+    <div className="vh-100 d-flex justify-content-center align-items-center">
+    <div className="card login-container p-3" style={{ width: 400 }}>
       {error && <Alert message={error} type="error" showIcon />}
+
+      <div className="w-100 text-center">
+          <Image
+          width={100}
+          src="./burbuja-de-dialogo.png"
+          alt="Logo"
+          style={{ marginBottom: 10 }}
+          preview={false}>
+
+        </Image>
+        <h4>Bienvenido <strong>FeedBack</strong></h4>
+        <p className="fs-5">Inicia sesión para continuar</p>
+      </div>
+     
+
       <Form layout="vertical" onFinish={handleLogin}>
         <Form.Item
           label="Usuario"
@@ -51,6 +69,7 @@ function LoginPage({ onLoginSuccess }) {
         </Form.Item>
       </Form>
     </div>
+        </div>
   )
 }
 

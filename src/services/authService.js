@@ -1,6 +1,6 @@
 const mockUserData = [
-  { username: "admin", password: "123456" },
-  { username: "user", password: "password" },
+  { username: "admin", password: "123456", role: "admin" },
+  { username: "user", password: "password", role: "user" },
 ]
 
 export const loginService = async (username, password) => {
@@ -10,7 +10,8 @@ export const loginService = async (username, password) => {
       const user = mockUserData.find(
         (u) => u.username === username && u.password === password
       )
-      resolve(!!user) // Devuelve true si las credenciales coinciden
+      
+      resolve(user) // Devuelve true si las credenciales coinciden
     }, 1000)
   })
 }

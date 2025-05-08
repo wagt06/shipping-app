@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, Layout, Typography, Space } from "antd"
+import { Button, Layout, Typography, Space,Image } from "antd"
 import { UserOutlined, FormOutlined, MoonOutlined,SunOutlined } from "@ant-design/icons"
 import SurveyList from "../components/SurveyList"
 import SurveyEditor from "../components/SurveyEditor"
@@ -10,7 +10,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage"
 const { Header, Content } = Layout
 const { Title } = Typography
 
-function HomePage({ setThemeMode, themeMode }) {
+function HomePage({ setThemeMode, themeMode,user }) {
   // Estados para manejar la aplicación
   const [surveys, setSurveys] = useLocalStorage("surveys", [])
   const [responses, setResponses] = useLocalStorage("responses", [])
@@ -22,9 +22,9 @@ function HomePage({ setThemeMode, themeMode }) {
     answers: {},
     submittedAt: null,
   })
-  const [userRole, setUserRole] = useState("admin") // admin o user
-  const [theme, setTheme] = useState("light") // light o dark
 
+  const [theme, setTheme] = useState("light") // light o dark
+debugger;
   // Función para alternar el tema
   const toggleTheme = () => {
     const newTheme = themeMode === "light" ? "dark" : "light"
@@ -99,9 +99,9 @@ function HomePage({ setThemeMode, themeMode }) {
   }
 
   // Función para cambiar el rol del usuario (para demostración)
-  const toggleUserRole = () => {
-    setUserRole(userRole === "admin" ? "user" : "admin")
-  }
+   const toggleUserRole = () => {
+  //   setUserRole(userRole === "admin" ? "user" : "admin")
+   }
 
   // Renderizar el contenido según la vista actual
   const renderContent = () => {
@@ -129,7 +129,7 @@ function HomePage({ setThemeMode, themeMode }) {
         return (
           <SurveyList
             surveys={surveys}
-            userRole={userRole}
+            userRole={user.role}
             onEdit={handleEditSurvey}
             onAnswer={handleAnswerSurvey}
             onViewResults={handleViewResults}
@@ -142,24 +142,24 @@ function HomePage({ setThemeMode, themeMode }) {
 
   return (
     <Layout className={`vh-100 ${theme}`}>
-      <Header className="site-header p-2">
+      <Header className="site-header  sticky-top">
         <div className="d-flex justify-content-between align-content-center ">
-          <img src="/logo.png" alt="Logo" className="logo" />
+          <Image src="/burbuja-de-dialogo.png" alt="Logo"  style={{width:"30px", height:"30px"}} />
           <div className="fs-5 text-white ms-2 me-auto" onClick={() => setCurrentView("list")} style={{ cursor: "pointer" }}>
               ED69
           </div> 
           <Space>
             <Button onClick={toggleUserRole} icon={<UserOutlined />}>
-              Rol: {userRole === "admin" ? "Administrador" : "Usuario"}
+              Hola! {user.username}
             </Button>
-            {userRole === "admin" && currentView === "list" && (
+            {user.role === "admin" && currentView === "list" && (
               <Button type="primary" onClick={handleCreateSurvey} icon={<FormOutlined />}>
                 Nueva Encuesta
               </Button>
             )}
             {currentView !== "list" && <Button onClick={() => setCurrentView("list")}>Volver a la Lista</Button>}
             <Button type="default" variant="outlined" onClick={toggleTheme} >
-               {theme === "light" ? <SunOutlined /> :  <MoonOutlined/>}
+               {themeMode === "light" ? <SunOutlined /> :  <MoonOutlined/>}
             </Button>
           </Space>
         </div>
