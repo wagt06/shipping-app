@@ -1,0 +1,46 @@
+// Re-export Ant Design components to avoid direct imports
+// that might be causing the issue
+export {
+  Button,
+  Card,
+  Input,
+  Select,
+  Checkbox,
+  Radio,
+  DatePicker,
+  Form,
+  Alert,
+  Space,
+  Typography,
+  List,
+  Progress,
+  Divider,
+  Empty,
+  Modal,
+  Tooltip,
+  Badge,
+  Row,
+  Col,
+  Layout,
+} from "antd"
+
+// Re-export icons to avoid direct imports
+export {
+  SearchOutlined,
+  EditOutlined,
+  EyeOutlined,
+  DeleteOutlined,
+  CalendarOutlined,
+  UserOutlined,
+  QuestionOutlined,
+  PlusOutlined,
+  SaveOutlined,
+  MenuOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+  CopyOutlined,
+  FormOutlined,
+  CheckCircleOutlined,
+  CloseCircleOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons"
