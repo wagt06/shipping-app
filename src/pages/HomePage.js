@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Button, Layout, Typography, Space,Image } from "antd"
-import { UserOutlined, FormOutlined, MoonOutlined,SunOutlined } from "@ant-design/icons"
+import { UserOutlined, FormOutlined, MoonOutlined,SunOutlined, ArrowLeftOutlined } from "@ant-design/icons"
 import SurveyList from "../components/SurveyList"
 import SurveyEditor from "../components/SurveyEditor"
 import SurveyForm from "../components/SurveyForm"
@@ -149,15 +149,16 @@ debugger;
               ED69
           </div> 
           <Space>
-            <Button onClick={toggleUserRole} icon={<UserOutlined />}>
+             <div className="d-flex align-items-center text-white">
+              <UserOutlined className="me-2" />
               Hola! {user.username}
-            </Button>
+            </div>
             {user.role === "admin" && currentView === "list" && (
               <Button type="primary" onClick={handleCreateSurvey} icon={<FormOutlined />}>
-                Nueva Encuesta
+              Encuesta
               </Button>
             )}
-            {currentView !== "list" && <Button onClick={() => setCurrentView("list")}>Volver a la Lista</Button>}
+           
             <Button type="default" variant="outlined" onClick={toggleTheme} >
                {themeMode === "light" ? <SunOutlined /> :  <MoonOutlined/>}
             </Button>
@@ -165,6 +166,11 @@ debugger;
         </div>
       </Header>
       <Content className="container mx-auto">
+         {currentView !== "list" && 
+         <Button className="mt-1 mb-1" onClick={() => setCurrentView("list")}>
+          <ArrowLeftOutlined/>
+          </Button>
+          }
         <div className="site-container">{renderContent()}</div>
       </Content>
     </Layout>
