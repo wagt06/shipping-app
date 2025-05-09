@@ -1,11 +1,12 @@
 import { useState } from "react"
-import { Button, Layout, Typography, Space,Image } from "antd"
+import { Button, Layout, Typography, Space,Image, Menu } from "antd"
 import { UserOutlined, FormOutlined, MoonOutlined,SunOutlined, ArrowLeftOutlined } from "@ant-design/icons"
 import SurveyList from "../components/SurveyList"
 import SurveyEditor from "../components/SurveyEditor"
 import SurveyForm from "../components/SurveyForm"
 import SurveyResults from "../components/SurveyResults"
 import { useLocalStorage } from "../hooks/useLocalStorage"
+import MenuPrincipal from "../components/menus/MenuPrincipal"
 
 const { Header, Content } = Layout
 const { Title } = Typography
@@ -23,14 +24,10 @@ function HomePage({ setThemeMode, themeMode,user }) {
     submittedAt: null,
   })
 
-  const [theme, setTheme] = useState("light") // light o dark
+
+
 debugger;
-  // Función para alternar el tema
-  const toggleTheme = () => {
-    const newTheme = themeMode === "light" ? "dark" : "light"
-    setThemeMode(newTheme)
-    document.body.className = newTheme // Cambia la clase del body para aplicar estilos globales
-  }
+
 
   // Función para crear una nueva encuesta
   const handleCreateSurvey = () => {
@@ -141,30 +138,8 @@ debugger;
   }
 
   return (
-    <Layout className={`vh-100 ${theme}`}>
-      <Header className="site-header  sticky-top">
-        <div className="d-flex justify-content-between align-content-center ">
-          <Image src="/burbuja-de-dialogo.png" alt="Logo"  style={{width:"30px", height:"30px"}} />
-          <div className="fs-5 text-white ms-2 me-auto" onClick={() => setCurrentView("list")} style={{ cursor: "pointer" }}>
-              ED69
-          </div> 
-          <Space>
-             <div className="d-flex align-items-center text-white">
-              <UserOutlined className="me-2" />
-              Hola! {user.username}
-            </div>
-            {user.role === "admin" && currentView === "list" && (
-              <Button type="primary" onClick={handleCreateSurvey} icon={<FormOutlined />}>
-              Encuesta
-              </Button>
-            )}
-           
-            <Button type="default" variant="outlined" onClick={toggleTheme} >
-               {themeMode === "light" ? <SunOutlined /> :  <MoonOutlined/>}
-            </Button>
-          </Space>
-        </div>
-      </Header>
+    <Layout className={`vh-100 ${themeMode}`}>
+      <MenuPrincipal setThemeMode = {setThemeMode} user={user} themeMode={themeMode} currentView={currentView} setCurrentView={setCurrentView} handleCreateSurvey ={handleCreateSurvey}/>
       <Content className="container mx-auto">
          {currentView !== "list" && 
          <Button className="mt-1 mb-1" onClick={() => setCurrentView("list")}>
